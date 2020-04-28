@@ -25,7 +25,10 @@ body,html {
   font-family: sans-serif;
 }
 
-
+.copyright p {
+  font-size: 1.5rem;
+  margin: 0;
+}
 
 .keys-cont {
   display: block;
@@ -34,6 +37,7 @@ body,html {
 }
 
 h1{
+  position: relative;
   background: rgba(0,0,0,0.4);
   text-align: center;
   font-size: 3.9rem;
@@ -85,6 +89,7 @@ kbd {
 </style>
 </head>
 <body>
+<div class="copyright"><p>Created by Sollabong</p><p>fixed by SipiZork</p></div>
 <h1>DUBSTEP DRUMPAD</h1>
 <div class="keys-cont">
   <div class="keys">
@@ -145,24 +150,67 @@ kbd {
 
 
 <script id="jsbin-javascript">
+  let a = false;
+  let s = false;
+  let d = false;
+  let f = false;
+  let g = false;
+  let h = false;
+  let j = false;
+  let k = false;
+  let l = false;
+  let needed;
+
 function removeTransition(e) {
     if (e.propertyName !== 'transform') return;
     e.target.classList.remove('playing');
   }
 
   function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-    if (!audio) return;
+    switch(e.keyCode) {
+      case 65: needed = a; a = true; break;
+      case 83: needed = s; s = true; break;
+      case 68: needed = d; d = true; break;
+      case 70: needed = f; f = true; break;
+      case 71: needed = g; g = true; break;
+      case 72: needed = h; h = true; break;
+      case 74: needed = j; j = true; break;
+      case 75: needed = k; k = true; break;
+      case 76: needed = l; l = true; break;
+    }
+    console.log(needed);
+    if(!needed) {
+      needed = true;
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+      if (!audio) return;
 
-    key.classList.add('playing');
-    audio.currentTime = 0;
-    audio.play();
+      key.classList.add('playing');
+      audio.currentTime = 0;
+      audio.play();
+      console.log(needed);
+      
+    }
+  }
+
+  function stopSound(e) {
+    switch(e.keyCode) {
+      case 65: a = false; break;
+      case 83: s = false; break;
+      case 68: d = false; break;
+      case 70: f = false; break;
+      case 71: g = false; break;
+      case 72: h = false; break;
+      case 74: j = false; break;
+      case 75: k = false; break;
+      case 76: l = false; break;
+    }
   }
 
   const keys = Array.from(document.querySelectorAll('.key'));
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
   window.addEventListener('keydown', playSound);
+  window.addEventListener('keyup', stopSound);
 </script>
 </body>
 </html>
