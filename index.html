@@ -178,7 +178,6 @@ function removeTransition(e) {
       case 75: needed = k; k = true; break;
       case 76: needed = l; l = true; break;
     }
-    console.log(needed);
     if(!needed) {
       needed = true;
       const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
@@ -188,8 +187,6 @@ function removeTransition(e) {
       key.classList.add('playing');
       audio.currentTime = 0;
       audio.play();
-      console.log(needed);
-      
     }
   }
 
