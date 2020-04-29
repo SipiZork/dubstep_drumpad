@@ -67,6 +67,8 @@ h1{
   color: white;
   background: rgba(0,0,0,0.4);
   text-shadow: 0 0 .5rem black;
+  cursor: pointer;
+  user-select: none;
 }
 
 .playing {
@@ -166,6 +168,18 @@ function removeTransition(e) {
     e.target.classList.remove('playing');
   }
 
+  function clickSound(keyCode) {
+    console.log("Hello");
+    console.log(keyCode);
+    const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${keyCode}"]`);
+    if (!audio) return;
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+  }
+
   function playSound(e) {
     switch(e.keyCode) {
       case 65: needed = a; a = true; break;
@@ -206,8 +220,13 @@ function removeTransition(e) {
 
   const keys = Array.from(document.querySelectorAll('.key'));
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  keys.forEach(key => key.addEventListener('click', function() {
+    keyCode = key.getAttribute("data-key")
+    clickSound(keyCode);
+  }));
   window.addEventListener('keydown', playSound);
   window.addEventListener('keyup', stopSound);
+
 </script>
 </body>
 </html>
